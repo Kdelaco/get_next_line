@@ -35,6 +35,31 @@ char	*ft_strchr(const char *s, int c)
 	return (0);
 }
 
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	int		i;
+	int		rlen;
+	char	*ret;
+
+	i = 0;
+	if (ft_strlen(s) >= start + len)
+		rlen = len;
+	else if (start > ft_strlen(s))
+		rlen = 0;
+	else
+		rlen = ft_strlen(s) - start;
+	ret = malloc(sizeof(char) * rlen + 1);
+	if (!(ret))
+		return (NULL);
+	while (i < rlen)
+	{
+		ret[i] = s[start + i];
+		i++;
+	}
+	ret[i] = 0;
+	return (ret);
+}
+
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	int		i;
