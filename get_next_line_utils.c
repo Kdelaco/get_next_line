@@ -1,0 +1,63 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kde-la-c <kde-la-c@student.42madrid>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/04 23:48:35 by kde-la-c          #+#    #+#             */
+/*   Updated: 2023/02/04 23:48:39 by kde-la-c         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "get_next_line.h"
+
+size_t	ft_strlen(const char *s)
+{
+	size_t	count;
+
+	count = 0;
+	while (*s++)
+		count++;
+	return (count);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	while (*s)
+	{
+		if (*s == (char)c)
+			return ((char *)s);
+		s++;
+	}
+	if (!c || c == 1024)
+		return ((char *)s);
+	return (0);
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	int		i;
+	int		j;
+	char	*ret;
+	size_t	totlen;
+
+	i = 0;
+	j = 0;
+	totlen = ft_strlen(s1) + ft_strlen(s2);
+	ret = malloc(sizeof(char) * totlen + 1);
+	if (!ret)
+		return (NULL);
+	while (s1[i])
+	{
+		ret[i] = s1[i];
+		i++;
+	}
+	while (s2[j])
+	{
+		ret[i + j] = s2[j];
+		j++;
+	}
+	ret[i + j] = 0;
+	return (ret);
+}
