@@ -86,3 +86,21 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	ret[i + j] = 0;
 	return (ret);
 }
+
+char	*ft_strdup(const char *s1)
+{
+	int		i;
+	char	*ret;
+
+	i = 0;
+	ret = malloc(sizeof(char) * (ft_strlen(s1) + 1));
+	if (!ret)
+		return (NULL);
+	while (s1[i])
+	{
+		ret[i] = s1[i];
+		i++;
+	}
+	ret[i] = 0;
+	return (ret);
+}

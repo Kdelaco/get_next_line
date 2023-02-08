@@ -12,8 +12,58 @@
 
 #include "get_next_line.h"
 
+// WIP
+char	*cut_line(char *buff, char **cachito)
+{
+	char	*ret;
+
+	
+	return (ret);
+}
+
 char	*get_next_line(int fd)
 {
+	char		*ret;
+	char		*buff;
+	static char	*cachito;
+	int			size;
+	// int			b;
+	(void) fd;
+
+	// initialization of vars
+	b = 1;
+	size = 0;
+	buff = malloc(sizeof(char) * BUFFER_SIZE);
+	if (!buff)
+		return (NULL);
+
+	// operacion cachito FALTA
+	if (cachito)
+	{
+		if (ret)
+		{
+			free(ret);
+			ret = ft_strjoin(ret, cachito);
+		}
+		else
+			ret = ft_strdup(cachito);
+		cachito = NULL;
+	}
+
+	if (!cachito)
+	{
+		size = read(fd, buff, BUFFER_SIZE);
+		if (ret)
+		{
+			free(ret);
+			ret = ft_strjoin(ret, buff);
+		}
+		else
+			ret = ft_strdup(buff);
+	}
+
+	while (b)
+
 
 	return (NULL);
 }
@@ -23,7 +73,7 @@ int	main()
 	int	fd;
 	// char	*str;
 
-	fd = open("/Users/kde-la-c/Cursus/GetNextLine/tests/test2", O_RDONLY);
+	fd = open("tests/test2", O_RDONLY);
 
 	if (fd > -1)
 	{
@@ -32,17 +82,6 @@ int	main()
 		printf("%s\n", get_next_line(fd));
 	}
 	else
-		printf("caca");
+		printf("no >:(");
 	return (0);
 }
-
-
-/* necesito :
-- malloc ret
-- malloc buffer
-- recuperar cachito
-- iterar buffer
-- encontrar enter
-- parar al enter
-- guardar cachito
--  */
