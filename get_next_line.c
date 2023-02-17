@@ -12,23 +12,55 @@
 
 #include "get_next_line.h"
 
-// WIP
-char	*cut_line(char *buff, char **cachito)
+// divides the provided string (buff or cachito) after the '\n' character and returns the first part, second part is stored on cachito
+char	*cut_line(char *buff, char *cachito)
 {
 	char	*ret;
+	char	*str;
+	int		i;
+	int		j;
 
-	
+	i = 0;
+	j = 0;
+	ret = calloc(50, 1);
+	str = calloc(50, 1);
+	if (!cachito)
+		memmove(str, buff, strlen(buff));
+	else
+		memmove(str, cachito, strlen(cachito));
+	printf(" str :%s\n", str);
+	memmove(ret, str, (strchr(str, '\n') - str) + 1);
+	memmove(cachito, strchr(str, '\n') + 1, strlen(strchr(str, '\n') + 1));
+	// while (((i > 0 && str[i - 1] != '\n') || !i) && str[i])
+	// 	ret[i] = str[i++];
+	// while (str[i])
+	// 	cachito[j] = str[i + j++];
 	return (ret);
+}
+
+int main()
+{
+	char		*buff;
+	static char	*cachito;
+	char		*ret;
+
+	buff = ft_strdup("hola\nquetal");
+	cachito = malloc(50);
+
+	printf("buff :%s\ncachito :%s\n", buff, cachito);
+	ret = cut_line(buff, cachito);
+	printf("buff :%s\ncachito :%s\nret :%s\n", buff, cachito, ret);
+
+	return 0;
 }
 
 char	*get_next_line(int fd)
 {
-	char		*ret;
-	char		*buff;
-	static char	*cachito;
-	int			size;
-	// int			b;
-	(void) fd;
+	char		*ret; // gets added memory
+	char		*buff; // recieves read memory // goes into cut_line
+	static char	*cachito; // recieves exceeding string // can be NULL // can get a rest of itself // is linked to cut_line
+	int			size; // gets amount of read bytes
+	int			b; // allows to iterate
 
 	// initialization of vars
 	b = 1;
@@ -50,6 +82,7 @@ char	*get_next_line(int fd)
 		cachito = NULL;
 	}
 
+	// operacion read FALTA
 	if (!cachito)
 	{
 		size = read(fd, buff, BUFFER_SIZE);
@@ -68,7 +101,7 @@ char	*get_next_line(int fd)
 	return (NULL);
 }
 
-int	main()
+/* int	main()
 {
 	int	fd;
 	// char	*str;
@@ -84,4 +117,4 @@ int	main()
 	else
 		printf("no >:(");
 	return (0);
-}
+} */
