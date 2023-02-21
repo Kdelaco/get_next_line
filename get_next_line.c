@@ -18,24 +18,24 @@ char	*cut_line(char *buff, char *cachito)
 	char	*ret;
 	char	*str;
 
+	if (!*buff && !*cachito)
+		return (NULL);
 	/* fills str with the string to be cut */
 	if (!*cachito)
 	{
-		str = ft_calloc(ft_strlen(buff), sizeof(char));
-		ft_memmove(str, buff, ft_strlen(buff));
+		// str = ft_calloc(ft_strlen(buff), sizeof(char));
+		ft_memmove(cachito, buff, ft_strlen(buff));
+		ft_bzero(buff, BUFFER_SIZE);
 	}
-	else
-	{
-		str = ft_calloc(ft_strlen(cachito), sizeof(char));
-		ft_memmove(str, cachito, ft_strlen(cachito));
-	}
+	str = ft_calloc(ft_strlen(cachito), sizeof(char));
+	ft_memmove(str, cachito, ft_strlen(cachito));
 
 	/* fills ret with the string to be returned */
 	ret = ft_calloc((ft_strchr(str, '\n') - str) + 1, sizeof(char));
 	ft_memmove(ret, str, (ft_strchr(str, '\n') - str) + 1);
 
 	/* fills cachito with the string to be left for later */
-	ft_bzero(cachito, 1);
+	ft_bzero(cachito, BUFFER_SIZE);
 	ft_memmove(cachito, ft_strchr(str, '\n') + 1, ft_strlen(ft_strchr(str, '\n') + 1));
 
 	free(str);
@@ -48,17 +48,32 @@ int main()
 	static char	*cachito;
 	char		*ret;
 
-	buff = ft_strdup("hola\n");
+	buff = ft_strdup("hola\nahahahaha\nhey\nstp");
 	if (!cachito)
 		cachito = calloc(BUFFER_SIZE, sizeof(char));
-	cachito = ft_strdup("queeeeeee\n123456789");
+	// cachito = ft_strdup("\n");
 	// cachito = calloc(BUFFER_SIZE, sizeof(char));
 	if (!cachito)
 		return 0;
 
 	printf("buff :%s\n", buff);
+	if (*cachito)
+		printf("cachito :%s\n", cachito);
+
 	ret = cut_line(buff, cachito);
+	printf("--execution--\n");
 	printf("buff :%s\nret :%s\ncachito :%s\n", buff, ret, cachito);
+	free(ret);
+
+	ret = cut_line(buff, cachito);
+	printf("--execution--\n");
+	printf("buff :%s\nret :%s\ncachito :%s\n", buff, ret, cachito);
+	free(ret);
+
+	ret = cut_line(buff, cachito);
+	printf("--execution--\n");
+	printf("buff :%s\nret :%s\ncachito :%s\n", buff, ret, cachito);
+	free(ret);
 
 	free(cachito);
 	// system("leaks a.out");
@@ -75,7 +90,7 @@ int main()
 	cachito = ft_calloc(BUFFER_SIZE, sizeof(char));
 
 	if (*cachito) //cachito is full
-		if (ret)
+		if (!ret) //ret is empty
 			ret = cut_line(buff, cachito);
 		else
 			ft_strlcat(ret, cut_line(buff, cachito), BUFFER_SIZE);
