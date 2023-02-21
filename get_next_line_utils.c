@@ -104,3 +104,82 @@ char	*ft_strdup(const char *s1)
 	ret[i] = 0;
 	return (ret);
 }
+
+void	ft_bzero(void *s, size_t n)
+{
+	unsigned long	i;
+	unsigned char	*tmp;
+
+	i = 0;
+	tmp = s;
+	while (i < n)
+	{
+		tmp[i] = 0;
+		i++;
+	}
+	s = tmp;
+}
+
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
+{
+	size_t	i;
+	size_t	dlen;
+	size_t	slen;
+
+	slen = ft_strlen(src);
+	if (!dst && !size)
+		return (slen);
+	i = 0;
+	dlen = ft_strlen(dst);
+	if (size <= dlen)
+		return (slen + size);
+	else
+	{
+		while (i + dlen < size - 1 && i < dlen + slen && src[i])
+		{
+			dst[dlen + i] = src[i];
+			i++;
+		}
+		dst[dlen + i] = 0;
+	}
+	return (dlen + slen);
+}
+
+void	*ft_memmove(void *dst, const void *src, size_t len)
+{
+	unsigned long		i;
+	unsigned char		*ret;
+	unsigned char		*tmp1;
+	const unsigned char	*tmp2;
+
+	i = 0;
+	ret = dst;
+	tmp1 = dst;
+	tmp2 = src;
+	if (tmp1 > tmp2)
+		while (len-- > 0)
+			tmp1[len] = tmp2[len];
+	else
+	{
+		while (i < len && (dst || src))
+		{
+			tmp1[i] = tmp2[i];
+			i++;
+		}
+	}
+	dst = tmp1;
+	return (ret);
+}
+
+void	*ft_calloc(size_t count, size_t size)
+{
+	void	*ptr;
+
+	if (count && SIZE_MAX / count < size)
+		return (NULL);
+	ptr = malloc(count * size);
+	if (!ptr)
+		return (NULL);
+	ft_bzero(ptr, count * size);
+	return (ptr);
+}

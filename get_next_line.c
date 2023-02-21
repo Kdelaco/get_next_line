@@ -17,24 +17,28 @@ char	*cut_line(char *buff, char *cachito)
 {
 	char	*ret;
 	char	*str;
-	int		i;
-	int		j;
 
-	i = 0;
-	j = 0;
-	ret = calloc(50, 1);
-	str = calloc(50, 1);
-	if (!cachito)
-		memmove(str, buff, strlen(buff));
+	/* fills str with the string to be cut */
+	if (!*cachito)
+	{
+		str = ft_calloc(ft_strlen(buff), sizeof(char));
+		ft_memmove(str, buff, ft_strlen(buff));
+	}
 	else
-		memmove(str, cachito, strlen(cachito));
-	printf(" str :%s\n", str);
-	memmove(ret, str, (strchr(str, '\n') - str) + 1);
-	memmove(cachito, strchr(str, '\n') + 1, strlen(strchr(str, '\n') + 1));
-	// while (((i > 0 && str[i - 1] != '\n') || !i) && str[i])
-	// 	ret[i] = str[i++];
-	// while (str[i])
-	// 	cachito[j] = str[i + j++];
+	{
+		str = ft_calloc(ft_strlen(cachito), sizeof(char));
+		ft_memmove(str, cachito, ft_strlen(cachito));
+	}
+
+	/* fills ret with the string to be returned */
+	ret = ft_calloc((ft_strchr(str, '\n') - str) + 1, sizeof(char));
+	ft_memmove(ret, str, (ft_strchr(str, '\n') - str) + 1);
+
+	/* fills cachito with the string to be left for later */
+	ft_bzero(cachito, 1);
+	ft_memmove(cachito, ft_strchr(str, '\n') + 1, ft_strlen(ft_strchr(str, '\n') + 1));
+
+	free(str);
 	return (ret);
 }
 
@@ -44,62 +48,39 @@ int main()
 	static char	*cachito;
 	char		*ret;
 
-	buff = ft_strdup("hola\nquetal");
-	cachito = malloc(50);
+	buff = ft_strdup("hola\n");
+	if (!cachito)
+		cachito = calloc(BUFFER_SIZE, sizeof(char));
+	cachito = ft_strdup("queeeeeee\n123456789");
+	// cachito = calloc(BUFFER_SIZE, sizeof(char));
+	if (!cachito)
+		return 0;
 
-	printf("buff :%s\ncachito :%s\n", buff, cachito);
+	printf("buff :%s\n", buff);
 	ret = cut_line(buff, cachito);
-	printf("buff :%s\ncachito :%s\nret :%s\n", buff, cachito, ret);
+	printf("buff :%s\nret :%s\ncachito :%s\n", buff, ret, cachito);
 
+	free(cachito);
+	// system("leaks a.out");
 	return 0;
 }
 
-char	*get_next_line(int fd)
+/* char	*get_next_line(int fd)
 {
-	char		*ret; // gets added memory
-	char		*buff; // recieves read memory // goes into cut_line
-	static char	*cachito; // recieves exceeding string // can be NULL // can get a rest of itself // is linked to cut_line
-	int			size; // gets amount of read bytes
-	int			b; // allows to iterate
+	char		*ret; //we give it memory progressively with strjoin
+	char		*buff;
+	static char	*cachito;
 
-	// initialization of vars
-	b = 1;
-	size = 0;
-	buff = malloc(sizeof(char) * BUFFER_SIZE);
-	if (!buff)
-		return (NULL);
+	buff = malloc(sizeof(char) * BUFFER_SIZE + 1);
+	cachito = ft_calloc(BUFFER_SIZE, sizeof(char));
 
-	// operacion cachito FALTA
-	if (cachito)
-	{
+	if (*cachito) //cachito is full
 		if (ret)
-		{
-			free(ret);
-			ret = ft_strjoin(ret, cachito);
-		}
+			ret = cut_line(buff, cachito);
 		else
-			ret = ft_strdup(cachito);
-		cachito = NULL;
-	}
-
-	// operacion read FALTA
-	if (!cachito)
-	{
-		size = read(fd, buff, BUFFER_SIZE);
-		if (ret)
-		{
-			free(ret);
-			ret = ft_strjoin(ret, buff);
-		}
-		else
-			ret = ft_strdup(buff);
-	}
-
-	while (b)
-
-
+			ft_strlcat(ret, cut_line(buff, cachito), BUFFER_SIZE);
 	return (NULL);
-}
+} */
 
 /* int	main()
 {
