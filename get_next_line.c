@@ -20,13 +20,14 @@ char	*cut_line(char *buff, char *cachito)
 
 	if (!*buff && !*cachito)
 		return (NULL);
+	// printf("buff :%s cachito :%s\n", buff, cachito);
 	/* fills str with the string to be cut */
 	if (!*cachito)
 	{
 		ft_memmove(cachito, buff, ft_strlen(buff));
 		ft_bzero(buff, BUFFER_SIZE);
 	}
-	str = ft_calloc(ft_strlen(cachito), sizeof(char));
+	str = ft_calloc(ft_strlen(cachito) + 1, sizeof(char));
 	ft_memmove(str, cachito, ft_strlen(cachito));
 
 	/* fills ret with the string to be returned */
@@ -79,11 +80,12 @@ char	*cut_line(char *buff, char *cachito)
 	return 0;
 } */
 
-char	*get_next_line(int fd)
+/* char	*get_next_line(int fd)
 {
 	char		*ret;
 	char		*buff;
 	static char	*cachito;
+	int			*b;
 	size_t		bsize;
 
 	buff = malloc(sizeof(char) * BUFFER_SIZE + 1);
@@ -94,9 +96,9 @@ char	*get_next_line(int fd)
 
 	if (*cachito)
 		if (!ret)
-			ret = cut_line(buff, cachito);
+			ret = cut_line(buff, cachito, b);
 		else
-			ft_strlcat(ret, cut_line(buff, cachito), BUFFER_SIZE);
+			ft_strlcat(ret, cut_line(buff, cachito, b), BUFFER_SIZE);
 
 	if (!*cachito)
 	{
@@ -104,12 +106,12 @@ char	*get_next_line(int fd)
 		if (!bsize)
 			return (NULL);
 		if (!ret)
-			ret = cut_line(buff, cachito);
+			ret = cut_line(buff, cachito, b);
 		else
-			ft_strlcat(ret, cut_line(buff, cachito), BUFFER_SIZE);
+			ft_strlcat(ret, cut_line(buff, cachito, b), BUFFER_SIZE);
 	}
 	return (ret);
-}
+} */
 
 /* int	main()
 {
