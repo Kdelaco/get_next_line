@@ -19,7 +19,7 @@
 # include <fcntl.h>
 # include <string.h>
 
-#define	BUFFER_SIZE 23
+#define	BUFFER_SIZE 19
 
 char	*get_next_line(int fd);
 

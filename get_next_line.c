@@ -22,6 +22,7 @@ char	*cut_line(char *buff, char *cachito)
 		return (NULL);
 	// printf("buff :%s cachito :%s\n", buff, cachito);
 	/* fills str with the string to be cut */
+	printf("CACH :%s\n", cachito);
 	if (!*cachito)
 	{
 		ft_memmove(cachito, buff, ft_strlen(buff));
@@ -80,25 +81,29 @@ char	*cut_line(char *buff, char *cachito)
 	return 0;
 } */
 
-/* char	*get_next_line(int fd)
+char	*get_next_line(int fd)
 {
 	char		*ret;
 	char		*buff;
 	static char	*cachito;
-	int			*b;
+	// int			*b;
 	size_t		bsize;
+
+	ret = malloc(0);
 
 	buff = malloc(sizeof(char) * BUFFER_SIZE + 1);
 	if (!cachito)
-		cachito = ft_calloc(BUFFER_SIZE, sizeof(char));
+		cachito = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	if (!cachito)
 		return (NULL);
 
 	if (*cachito)
+	{
 		if (!ret)
-			ret = cut_line(buff, cachito, b);
+			ret = cut_line(buff, cachito);
 		else
-			ft_strlcat(ret, cut_line(buff, cachito, b), BUFFER_SIZE);
+			ft_strlcat(ret, cut_line(buff, cachito), BUFFER_SIZE);
+	}
 
 	if (!*cachito)
 	{
@@ -106,27 +111,37 @@ char	*cut_line(char *buff, char *cachito)
 		if (!bsize)
 			return (NULL);
 		if (!ret)
-			ret = cut_line(buff, cachito, b);
+			ret = cut_line(buff, cachito);
 		else
-			ft_strlcat(ret, cut_line(buff, cachito, b), BUFFER_SIZE);
+			ft_strlcat(ret, cut_line(buff, cachito), BUFFER_SIZE);
 	}
 	return (ret);
-} */
+}
 
-/* int	main()
+int	main()
 {
 	int	fd;
-	// char	*str;
+	char	*str;
 
 	fd = open("tests/test2", O_RDONLY);
 
-	if (fd > -1)
+	if (!(fd > -1))
 	{
-		printf("%s\n", get_next_line(fd));
-		printf("%s\n", get_next_line(fd));
-		printf("%s\n", get_next_line(fd));
-	}
-	else
 		printf("no >:(");
+		return (0);
+	}
+	str = get_next_line(fd);
+	printf("%s", str);
+	free(str);
+	
+	str = get_next_line(fd);
+	printf("%s", str);
+	free(str);
+
+	str = get_next_line(fd);
+	printf("%s", str);
+	free(str);
+
+	// system("leaks a.out");
 	return (0);
-} */
+}
