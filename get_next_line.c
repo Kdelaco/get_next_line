@@ -23,7 +23,6 @@ char	*cut_line(char *buff, char *cachito)
 	/* fills str with the string to be cut */
 	if (!*cachito)
 	{
-		// str = ft_calloc(ft_strlen(buff), sizeof(char));
 		ft_memmove(cachito, buff, ft_strlen(buff));
 		ft_bzero(buff, BUFFER_SIZE);
 	}
@@ -42,13 +41,13 @@ char	*cut_line(char *buff, char *cachito)
 	return (ret);
 }
 
-int main()
+/* int main()
 {
 	char		*buff;
 	static char	*cachito;
 	char		*ret;
 
-	buff = ft_strdup("hola\nahahahaha\nhey\nstp");
+	buff = ft_strdup("hola\nahahahaha\nhey\n");
 	if (!cachito)
 		cachito = calloc(BUFFER_SIZE, sizeof(char));
 	// cachito = ft_strdup("\n");
@@ -78,24 +77,39 @@ int main()
 	free(cachito);
 	// system("leaks a.out");
 	return 0;
-}
+} */
 
-/* char	*get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-	char		*ret; //we give it memory progressively with strjoin
+	char		*ret;
 	char		*buff;
 	static char	*cachito;
+	size_t		bsize;
 
 	buff = malloc(sizeof(char) * BUFFER_SIZE + 1);
-	cachito = ft_calloc(BUFFER_SIZE, sizeof(char));
+	if (!cachito)
+		cachito = ft_calloc(BUFFER_SIZE, sizeof(char));
+	if (!cachito)
+		return (NULL);
 
-	if (*cachito) //cachito is full
-		if (!ret) //ret is empty
+	if (*cachito)
+		if (!ret)
 			ret = cut_line(buff, cachito);
 		else
 			ft_strlcat(ret, cut_line(buff, cachito), BUFFER_SIZE);
-	return (NULL);
-} */
+
+	if (!*cachito)
+	{
+		bsize = read(fd, buff, BUFFER_SIZE);
+		if (!bsize)
+			return (NULL);
+		if (!ret)
+			ret = cut_line(buff, cachito);
+		else
+			ft_strlcat(ret, cut_line(buff, cachito), BUFFER_SIZE);
+	}
+	return (ret);
+}
 
 /* int	main()
 {
