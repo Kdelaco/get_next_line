@@ -118,7 +118,7 @@ char	*get_next_line(int fd)
 	return (ret);
 }
 
-int	main()
+/* int	main()
 {
 	int	fd;
 	char	*str;
@@ -144,4 +144,4 @@ int	main()
 
 	// system("leaks a.out");
 	return (0);
-}
+} */
