@@ -27,6 +27,8 @@ char	*get_start(char *line, int *is_cachito)
 		ret = ft_strdup(line);
 	}
 	line = ft_substr(line, (ft_strchr(line, '\n')) - line, ft_strlen(ret));
+	// if (ret)
+	// 	free(ret);
 	return (ret);
 }
 
@@ -41,15 +43,22 @@ char	*get_next_line(int fd)
 	if (fd < 0)
 		return (NULL);
 	is_cachito = malloc(sizeof(int) * 1);
+	if (!is_cachito)
+		return (NULL);
+	*is_cachito = 0;
 	blen = 1;
 	ret = NULL;
-	buff = calloc(BUFFER_SIZE + 1, sizeof(char));
+	buff = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	if (!buff)
+	{
+		free(is_cachito);
 		return (NULL);
+	}
 	if (cachito)
 		buff = cachito;
 	while (!*is_cachito && blen)
 	{
+		// write(1, "hola\n", 5);
 		if (*buff)
 		{
 			if (!ret)
@@ -58,6 +67,8 @@ char	*get_next_line(int fd)
 			}
 			else
 			{
+				// free(ret);
+				printf("ret :%s||\n", ret);
 				ret = ft_strjoin(ret, get_start(buff, is_cachito));
 			}
 			if (is_cachito)
@@ -68,14 +79,15 @@ char	*get_next_line(int fd)
 		}
 		else
 			blen = read(fd, buff, BUFFER_SIZE);
+		// printf("ret :%s\n", ret);
 	}
-
+	free(is_cachito);
 	return (ret);
 }
 
 int	main()
 {
-	int	fd;
+	int		fd;
 	char	*str;
 
 	fd = open("tests/test2", O_RDONLY);
@@ -86,12 +98,12 @@ int	main()
 		return (0);
 	}
 	str = get_next_line(fd);
-	printf("%s", str);
+	printf("%s\n", str);
 	free(str);
 	
-	// str = get_next_line(fd);
-	// printf("%s", str);
-	// free(str);
+	str = get_next_line(fd);
+	printf("%s\n", str);
+	free(str);
 
 	// str = get_next_line(fd);
 	// printf("%s", str);
