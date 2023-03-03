@@ -18,15 +18,15 @@ char	*get_start(char *line, int *is_cachito)
 
 	if (strchr(line, '\n'))
 	{
-		ret = ft_substr(line, 0, (ft_strchr(line, '\n')) - line);
-		if (!(int)(((ft_strchr(line, '\n')) - line) == (int)ft_strlen(line)))
+		ret = ft_substr(line, 0, (ft_strchr(line, '\n') + 1) - line);
+		if (!(int)(((ft_strchr(line, '\n') + 1) - line) == (int)ft_strlen(line)))
 			*is_cachito = 1;
 	}
 	else
 	{
 		ret = ft_strdup(line);
 	}
-	line = ft_substr(line, (ft_strchr(line, '\n')) - line, ft_strlen(ret));
+	line = ft_substr(line, (ft_strchr(line, '\n') + 1) - line, ft_strlen(ret));
 	// if (ret)
 	// 	free(ret);
 	return (ret);
@@ -36,6 +36,7 @@ char	*get_next_line(int fd)
 {
 	char		*ret;
 	char		*buff;
+	char		*temp;
 	static char	*cachito;
 	int			*is_cachito;
 	size_t		blen;
@@ -54,12 +55,16 @@ char	*get_next_line(int fd)
 		free(is_cachito);
 		return (NULL);
 	}
-	if (cachito)
+	if (*cachito)
+	{
+		printf("hay cachito\n");
 		buff = cachito;
-	while (!*is_cachito && blen)
+	}
+		write(1, "test\n", 5);
+	while (!*is_cachito/*  && blen */)
 	{
 		// write(1, "hola\n", 5);
-		if (*buff)
+		if (buff && *buff)
 		{
 			if (!ret)
 			{
@@ -67,11 +72,14 @@ char	*get_next_line(int fd)
 			}
 			else
 			{
-				// free(ret);
-				printf("ret :%s||\n", ret);
-				ret = ft_strjoin(ret, get_start(buff, is_cachito));
+				temp = ft_strdup(ret);
+				free(ret);
+				// printf("ret :%s||\n", ret);
+				ret = ft_strjoin(temp, get_start(buff, is_cachito));
+				free(temp);
 			}
-			if (is_cachito)
+			ft_bzero(buff, BUFFER_SIZE);
+			if (*is_cachito)
 			{
 				cachito = ft_strchr(buff, '\n') + 1;
 				ft_bzero(buff, BUFFER_SIZE);
