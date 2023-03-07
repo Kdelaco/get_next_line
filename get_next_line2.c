@@ -12,19 +12,23 @@
 
 #include "get_next_line.h"
 
-char	*get_start(char *buff, int *n)
+char	*get_start(char *line, int *is_cachito)
 {
 	char	*ret;
 
-	if (!strchr(buff, '\n'))
-		return (buff);
-	else if ((int)(ft_strchr(buff, '\n') - (buff - 1)) == (int)ft_strlen(buff))
+	if (strchr(line, '\n'))
 	{
-		*n = 2;
-		return (buff);
+		ret = ft_substr(line, 0, (ft_strchr(line, '\n') + 1) - line);
+		if (!(int)(((ft_strchr(line, '\n') + 1) - line) == (int)ft_strlen(line)))
+			*is_cachito = 1;
 	}
-	ret = ft_substr(buff, 0, ft_strchr(buff, '\n') - (buff - 1));
-	*n = 1;
+	else
+	{
+		ret = ft_strdup(line);
+	}
+	line = ft_substr(line, (ft_strchr(line, '\n') + 1) - line, ft_strlen(ret));
+	// if (ret)
+	// 	free(ret);
 	return (ret);
 }
 
@@ -32,46 +36,60 @@ char	*get_next_line(int fd)
 {
 	char		*ret;
 	char		*buff;
+	char		*temp;
 	static char	*cachito;
-	size_t		bsize;
-	int			*n;
+	int			*is_cachito;
+	size_t		blen;
 
-	buff = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-	cachito = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-	n = malloc(sizeof(int));
+	if (fd < 0)
+		return (NULL);
+	is_cachito = malloc(sizeof(int) * 1);
+	if (!is_cachito)
+		return (NULL);
+	*is_cachito = 0;
+	blen = 1;
 	ret = NULL;
-	bsize = 1;
-
-	*n = 0;
+	buff = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	if (!buff)
+	{
+		free(is_cachito);
+		return (NULL);
+	}
 	if (*cachito)
 	{
-		ft_memmove(buff, cachito, ft_strlen(cachito));
-		ft_bzero(cachito, ft_strlen(cachito));
+		printf("hay cachito\n");
+		buff = cachito;
 	}
-	while (!*n && bsize)
+		write(1, "test\n", 5);
+	while (!*is_cachito/*  && blen */)
 	{
-		if (!*buff)
+		// write(1, "hola\n", 5);
+		if (buff && *buff)
 		{
-			bsize = read(fd, buff, BUFFER_SIZE);
-		}
-		if (bsize)
-		{
-			if (ret)
+			if (!ret)
 			{
-				strlcat(ret, get_start(buff, n), ft_strlen(ret) + BUFFER_SIZE);
+				ret = ft_strdup(get_start(buff, is_cachito));
 			}
 			else
 			{
-				ret = get_start(buff, n);
+				temp = ft_strdup(ret);
+				free(ret);
+				// printf("ret :%s||\n", ret);
+				ret = ft_strjoin(temp, get_start(buff, is_cachito));
+				free(temp);
 			}
-			if (!*n)
+			ft_bzero(buff, BUFFER_SIZE);
+			if (*is_cachito)
+			{
+				cachito = ft_strchr(buff, '\n') + 1;
 				ft_bzero(buff, BUFFER_SIZE);
+			}
 		}
+		else
+			blen = read(fd, buff, BUFFER_SIZE);
+		// printf("ret :%s\n", ret);
 	}
-	if (*n == 1)
-	{
-		ft_memmove(cachito, ft_strchr(buff, '\n') + 1, ft_strlen(ft_strchr(buff, '\n') + 1));
-	}
+	free(is_cachito);
 	return (ret);
 }
 
