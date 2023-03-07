@@ -87,6 +87,37 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (ret);
 }
 
+char	*ft_straddmem(char const *s1, char const *s2)
+{
+	int		i;
+	int		j;
+	char	*ret;
+	char	*temp;
+	size_t	totlen;
+
+	i = 0;
+	j = 0;
+	temp = NULL;
+	ft_memmove(temp, s1, ft_strlen(s1));
+	totlen = ft_strlen(temp) + ft_strlen(s2);
+	ret = malloc(sizeof(char) * totlen + 1);
+	if (!ret)
+		return (NULL);
+	while (temp[i])
+	{
+		ret[i] = temp[i];
+		// i++;
+	}
+	while (s2[j])
+	{
+		ret[i + j] = s2[j];
+		j++;
+	}
+	ret[i + j] = 0;
+	free((void *)s1);
+	return (ret);
+}
+
 char	*ft_strdup(const char *s1)
 {
 	int		i;

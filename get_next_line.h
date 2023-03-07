@@ -20,7 +20,7 @@
 # include <string.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 3
+#  define BUFFER_SIZE 5
 # endif
 
 char	*get_next_line(int fd);
@@ -29,6 +29,7 @@ size_t	ft_strlen(const char *s);
 char	*ft_strchr(const char *s, int c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_straddmem(char const *s1, char const *s2);
 char	*ft_strdup(const char *s1);
 void	ft_bzero(void *s, size_t n);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);

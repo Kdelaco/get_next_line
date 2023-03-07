@@ -37,11 +37,11 @@ char	*get_next_line(int fd)
 	int			*n;
 
 	buff = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-	cachito = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	if (!cachito)
+		cachito = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	n = malloc(sizeof(int));
 	ret = NULL;
 	bsize = 1;
-
 	*n = 0;
 	if (*cachito)
 	{
@@ -51,27 +51,21 @@ char	*get_next_line(int fd)
 	while (!*n && bsize)
 	{
 		if (!*buff)
-		{
 			bsize = read(fd, buff, BUFFER_SIZE);
-		}
 		if (bsize)
 		{
-			if (ret)
-			{
-				strlcat(ret, get_start(buff, n), ft_strlen(ret) + BUFFER_SIZE);
-			}
+			if (!ret)
+				ret = ft_strdup(get_start(buff, n));
 			else
 			{
-				ret = get_start(buff, n);
+				ret = ft_strjoin(ret, get_start(buff, n));
 			}
 			if (!*n)
 				ft_bzero(buff, BUFFER_SIZE);
 		}
 	}
 	if (*n == 1)
-	{
 		ft_memmove(cachito, ft_strchr(buff, '\n') + 1, ft_strlen(ft_strchr(buff, '\n') + 1));
-	}
 	return (ret);
 }
 
@@ -88,17 +82,17 @@ int	main()
 		return (0);
 	}
 	str = get_next_line(fd);
-	printf("%s\n", str);
+	printf("%s", str);
 	free(str);
 	
 	str = get_next_line(fd);
-	printf("%s\n", str);
+	printf("%s", str);
 	free(str);
 
-	// str = get_next_line(fd);
-	// printf("%s", str);
-	// free(str);
+	str = get_next_line(fd);
+	printf("%s", str);
+	free(str);
 
-	// system("leaks a.out");
+	system("leaks a.out");
 	return (0);
 }
