@@ -61,7 +61,7 @@ char	*get_next_line(int fd)
 				ret = ft_strjoin(ret, get_start(buff, n));
 			}
 			if (!*n)
-				ft_bzero(buff, BUFFER_SIZE);
+				ft_bzero(buff, bsize);
 		}
 	}
 	if (*n == 1)

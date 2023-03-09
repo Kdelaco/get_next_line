@@ -57,6 +57,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		i++;
 	}
 	ret[i] = 0;
+	// free((void *)s);
 	return (ret);
 }
 
@@ -84,6 +85,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		j++;
 	}
 	ret[i + j] = 0;
+	// free((void *)s1);
+	// free((void *)s2);
 	return (ret);
 }
 
@@ -114,7 +117,7 @@ char	*ft_straddmem(char const *s1, char const *s2)
 		j++;
 	}
 	ret[i + j] = 0;
-	free((void *)s1);
+	// free((void *)s1);
 	return (ret);
 }
 
@@ -133,6 +136,7 @@ char	*ft_strdup(const char *s1)
 		i++;
 	}
 	ret[i] = 0;
+	// free((void *)s1);
 	return (ret);
 }
 
