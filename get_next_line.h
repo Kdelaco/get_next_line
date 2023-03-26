@@ -18,9 +18,10 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <string.h>
+# include <stdint.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 5
+#  define BUFFER_SIZE 50
 # endif
 
 char	*get_next_line(int fd);

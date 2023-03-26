@@ -93,6 +93,6 @@ int	main()
 	printf("%s", str);
 	free(str);
 
-	system("leaks a.out");
+	// system("leaks a.out");
 	return (0);
 }
