@@ -15,15 +15,17 @@
 char	*get_start(char *buff, int *n)
 {
 	char	*ret;
+	int		nlen;
 
-	if (!strchr(buff, '\n'))
+	if (!ft_strchr(buff, '\n'))
 		return (buff);
-	else if ((int)(ft_strchr(buff, '\n') - (buff - 1)) == (int)ft_strlen(buff))
+	nlen = ft_strchr(buff, '\n') - (buff - 1);
+	if (nlen == (int)ft_strlen(buff))
 	{
 		*n = 2;
 		return (buff);
 	}
-	ret = ft_substr(buff, 0, ft_strchr(buff, '\n') - (buff - 1));
+	ret = ft_substr(buff, 0, nlen);
 	*n = 1;
 	return (ret);
 }
@@ -39,7 +41,6 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	ft_bzero(buff, BUFFER_SIZE + 1);
-	// buff = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	if (!cachito)
 		cachito = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	n = malloc(sizeof(int));
@@ -60,15 +61,14 @@ char	*get_next_line(int fd)
 			if (!ret)
 				ret = ft_strdup(get_start(buff, n));
 			else
-			{
 				ret = ft_strjoin(ret, get_start(buff, n));
-			}
 			if (!*n)
 				ft_bzero(buff, bsize);
 		}
 	}
 	if (*n == 1)
 		ft_memmove(cachito, ft_strchr(buff, '\n') + 1, ft_strlen(ft_strchr(buff, '\n') + 1));
+	free(n);
 	return (ret);
 }
 
@@ -96,6 +96,6 @@ int	main()
 	printf("%s", str);
 	free(str);
 
-	// system("leaks a.out");
+	system("leaks a.out");
 	return (0);
 }
