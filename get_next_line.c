@@ -36,6 +36,8 @@ char	*get_next_line(int fd)
 	size_t		bsize;
 	int			*n;
 
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
 	buff = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	if (!cachito)
 		cachito = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
@@ -48,7 +50,7 @@ char	*get_next_line(int fd)
 		ft_memmove(buff, cachito, ft_strlen(cachito));
 		ft_bzero(cachito, ft_strlen(cachito));
 	}
-	while (!*n && bsize)
+	while (!*n && bsize > 0)
 	{
 		if (!*buff)
 			bsize = read(fd, buff, BUFFER_SIZE);
