@@ -57,7 +57,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		i++;
 	}
 	ret[i] = 0;
-	// free((void *)s);
 	return (ret);
 }
 

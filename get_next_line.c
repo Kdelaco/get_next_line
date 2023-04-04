@@ -31,14 +31,15 @@ char	*get_start(char *buff, int *n)
 char	*get_next_line(int fd)
 {
 	char		*ret;
-	char		*buff;
+	char		buff[BUFFER_SIZE + 1];
 	static char	*cachito;
 	size_t		bsize;
 	int			*n;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	buff = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	ft_bzero(buff, BUFFER_SIZE + 1);
+	// buff = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	if (!cachito)
 		cachito = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	n = malloc(sizeof(int));
