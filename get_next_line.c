@@ -34,6 +34,7 @@ char	*get_next_line(int fd)
 {
 	char		*ret;
 	char		buff[BUFFER_SIZE + 1];
+	char		*tmp;
 	static char	*cachito;
 	size_t		bsize;
 	int			*n;
@@ -59,9 +60,19 @@ char	*get_next_line(int fd)
 		if (bsize)
 		{
 			if (!ret)
-				ret = ft_strdup(get_start(buff, n));
+			{
+				tmp = get_start(buff, n);
+				ret = ft_strdup(tmp);
+				if (*n == 1)
+					free(tmp);
+			}
 			else
-				ret = ft_strjoin(ret, get_start(buff, n));
+			{
+				tmp = get_start(buff, n);
+				ret = ft_strjoin(ret, tmp);
+				if (*n == 1)
+					free(tmp);
+			}
 			if (!*n)
 				ft_bzero(buff, bsize);
 		}
@@ -72,7 +83,7 @@ char	*get_next_line(int fd)
 	return (ret);
 }
 
-int	main()
+/* int	main()
 {
 	int		fd;
 	char	*str;
@@ -98,4 +109,4 @@ int	main()
 
 	system("leaks a.out");
 	return (0);
-}
+} */
