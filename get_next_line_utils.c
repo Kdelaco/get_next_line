@@ -85,39 +85,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	}
 	ret[i + j] = 0;
 	free(s1);
-	// if (s2)
-	// 	free(s2);
-	return (ret);
-}
-
-char	*ft_straddmem(char *s1, char *s2)
-{
-	int		i;
-	int		j;
-	char	*ret;
-	char	*temp;
-	size_t	totlen;
-
-	i = 0;
-	j = 0;
-	temp = NULL;
-	ft_memmove(temp, s1, ft_strlen(s1));
-	totlen = ft_strlen(temp) + ft_strlen(s2);
-	ret = malloc(sizeof(char) * totlen + 1);
-	if (!ret)
-		return (NULL);
-	while (temp[i])
-	{
-		ret[i] = temp[i];
-		// i++;
-	}
-	while (s2[j])
-	{
-		ret[i + j] = s2[j];
-		j++;
-	}
-	ret[i + j] = 0;
-	free(s1);
 	return (ret);
 }
 
@@ -154,31 +121,6 @@ void	ft_bzero(void *s, size_t n)
 	s = tmp;
 }
 
-size_t	ft_strlcat(char *dst, const char *src, size_t size)
-{
-	size_t	i;
-	size_t	dlen;
-	size_t	slen;
-
-	slen = ft_strlen(src);
-	if (!dst && !size)
-		return (slen);
-	i = 0;
-	dlen = ft_strlen(dst);
-	if (size <= dlen)
-		return (slen + size);
-	else
-	{
-		while (i + dlen < size - 1 && i < dlen + slen && src[i])
-		{
-			dst[dlen + i] = src[i];
-			i++;
-		}
-		dst[dlen + i] = 0;
-	}
-	return (dlen + slen);
-}
-
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
 	unsigned long		i;
@@ -203,17 +145,4 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 	}
 	dst = tmp1;
 	return (ret);
-}
-
-void	*ft_calloc(size_t count, size_t size)
-{
-	void	*ptr;
-
-	if (count && SIZE_MAX / count < size)
-		return (NULL);
-	ptr = malloc(count * size);
-	if (!ptr)
-		return (NULL);
-	ft_bzero(ptr, count * size);
-	return (ptr);
 }
