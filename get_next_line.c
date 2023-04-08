@@ -62,7 +62,7 @@ char	*get_next_line(int fd)
 			else
 				ret = ft_strjoin(ret, tmp);
 			if (!n)
-				ft_bzero(buff, bsize);
+				ft_bzero(buff, BUFFER_SIZE + 1);
 		}
 	}
 	if (n == 1)
@@ -76,10 +76,11 @@ char	*get_next_line(int fd)
 /* int	main()
 {
 	int		fd;
+	int		i;
 	char	*str;
 
-	fd = open("tests/test2", O_RDONLY);
-
+	fd = open("tests/variable_nls.txt", O_RDONLY);
+	i = 0;
 	if (!(fd > -1))
 	{
 		printf("no >:(");
@@ -97,6 +98,6 @@ char	*get_next_line(int fd)
 		free(str);
 	}
 
-	system("leaks a.out");
+	// system("leaks a.out");
 	return (0);
 } */
