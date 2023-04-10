@@ -83,39 +83,36 @@ char	*get_next_line(int fd)
 		ft_memmove(cachito, tmp, ft_strlen(tmp));
 	}
 	if (n == -1)
-	{
-		free(ret);
-		return (0);
-	}
+		return (free(ret), NULL);
 	return (ret);
 }
 
-/* int	main()
-{
-	int		fd;
-	int		i;
-	char	*str;
+// int	main()
+// {
+// 	int		fd;
+// 	int		i;
+// 	char	*str;
 
-	fd = open("tests/test2", O_RDONLY);
-	i = 0;
-	if (!(fd > -1))
-	{
-		printf("no >:(");
-		return (0);
-	}
+// 	fd = open("tests/test2", O_RDONLY);
+// 	i = 0;
+// 	if (!(fd > -1))
+// 	{
+// 		printf("no >:(");
+// 		return (0);
+// 	}
 
-	str = get_next_line(fd);
-	printf("%s", str);
-	free(str);
+// 	str = get_next_line(fd);
+// 	printf("%s", str);
+// 	free(str);
 
-	while (str)
-	{
-		str = get_next_line(fd);
-		printf("%s", str);
-		free(str);
-		// i++;
-	}
+// 	while (str)
+// 	{
+// 		str = get_next_line(fd);
+// 		printf("%s", str);
+// 		free(str);
+// 		// i++;
+// 	}
 
-	// system("leaks a.out");
-	return (0);
-} */
+// 	// system("leaks a.out");
+// 	return (0);
+// }
