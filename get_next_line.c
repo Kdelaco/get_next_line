@@ -87,32 +87,43 @@ char	*get_next_line(int fd)
 	return (ret);
 }
 
-// int	main()
-// {
-// 	int		fd;
-// 	int		i;
-// 	char	*str;
+void	ft_bzero(void *s, size_t n)
+{
+	unsigned long	i;
+	unsigned char	*tmp;
 
-// 	fd = open("tests/test2", O_RDONLY);
-// 	i = 0;
-// 	if (!(fd > -1))
-// 	{
-// 		printf("no >:(");
-// 		return (0);
-// 	}
+	i = 0;
+	tmp = s;
+	while (i < n)
+	{
+		tmp[i] = 0;
+		i++;
+	}
+	s = tmp;
+}
 
-// 	str = get_next_line(fd);
-// 	printf("%s", str);
-// 	free(str);
+void	*ft_memmove(void *dst, const void *src, size_t len)
+{
+	unsigned long		i;
+	unsigned char		*ret;
+	unsigned char		*tmp1;
+	const unsigned char	*tmp2;
 
-// 	while (str)
-// 	{
-// 		str = get_next_line(fd);
-// 		printf("%s", str);
-// 		free(str);
-// 		// i++;
-// 	}
-
-// 	// system("leaks a.out");
-// 	return (0);
-// }
+	i = 0;
+	ret = dst;
+	tmp1 = dst;
+	tmp2 = src;
+	if (tmp1 > tmp2)
+		while (len-- > 0)
+			tmp1[len] = tmp2[len];
+	else
+	{
+		while (i < len && (dst || src))
+		{
+			tmp1[i] = tmp2[i];
+			i++;
+		}
+	}
+	dst = tmp1;
+	return (ret);
+}

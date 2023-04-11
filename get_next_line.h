@@ -24,14 +24,17 @@
 #  define BUFFER_SIZE 42
 # endif
 
+char	*get_start(char *buff, int *n);
+char	*read_line(char *buff, int fd, int *n);
 char	*get_next_line(int fd);
+
+void	ft_bzero(void *s, size_t n);
+void	*ft_memmove(void *dst, const void *src, size_t len);
 
 size_t	ft_strlen(const char *s);
 char	*ft_strchr(const char *s, int c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strdup(char *s1);
-void	ft_bzero(void *s, size_t n);
-void	*ft_memmove(void *dst, const void *src, size_t len);
 
 #endif
