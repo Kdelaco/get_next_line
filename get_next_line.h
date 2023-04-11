@@ -21,7 +21,7 @@
 # include <stdint.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE 8
 # endif
 
 char	*get_start(char *buff, int *n);
