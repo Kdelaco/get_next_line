@@ -63,7 +63,7 @@ char	*get_next_line(int fd)
 	char		*ret;
 	char		*tmp;
 	char		buff[BUFFER_SIZE + 1];
-	static char	cachito[BUFFER_SIZE];
+	static char	rest[BUFFER_SIZE];
 	int			n;
 
 	if (BUFFER_SIZE <= 0)
@@ -71,16 +71,16 @@ char	*get_next_line(int fd)
 	ft_bzero(buff, BUFFER_SIZE + 1);
 	ret = NULL;
 	n = 0;
-	if (cachito[0])
+	if (rest[0])
 	{
-		ft_memmove(buff, cachito, ft_strlen(cachito));
-		ft_bzero(cachito, ft_strlen(cachito));
+		ft_memmove(buff, rest, ft_strlen(rest));
+		ft_bzero(rest, ft_strlen(rest));
 	}
 	ret = read_line(buff, fd, &n);
 	if (n == 1)
 	{
 		tmp = ft_strchr(buff, '\n') + 1;
-		ft_memmove(cachito, tmp, ft_strlen(tmp));
+		ft_memmove(rest, tmp, ft_strlen(tmp));
 	}
 	if (n == -1)
 		return (free(ret), NULL);
