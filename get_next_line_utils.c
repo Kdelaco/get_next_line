@@ -30,7 +30,7 @@ char	*ft_strchr(const char *s, int c)
 			return ((char *)s);
 		s++;
 	}
-	if (!c || c == 1024)
+	if (*s == (char)c)
 		return ((char *)s);
 	return (0);
 }
@@ -60,7 +60,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (ret);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
 	int		i;
 	int		j;
@@ -84,11 +84,11 @@ char	*ft_strjoin(char *s1, char *s2)
 		j++;
 	}
 	ret[i + j] = 0;
-	free(s1);
+	free((char *) s1);
 	return (ret);
 }
 
-char	*ft_strdup(char *s1)
+char	*ft_strdup(const char *s1)
 {
 	int		i;
 	char	*ret;
