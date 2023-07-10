@@ -47,7 +47,7 @@ char	*read_line(char *buff, int fd, int *n)
 		if (!ret)
 			ret = ft_strdup(tmp);
 		else
-			ret = ft_strjoin(ret, tmp);
+			ret = ft_strjoin_f1(ret, tmp);
 		if (!*n)
 			ft_bzero(buff, BUFFER_SIZE + 1);
 	}

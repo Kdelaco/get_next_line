@@ -60,7 +60,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (ret);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin_f1(char const *s1, char const *s2)
 {
 	int		i;
 	int		j;

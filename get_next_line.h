@@ -34,7 +34,7 @@ void	*ft_memmove(void *dst, const void *src, size_t len);
 size_t	ft_strlen(const char *s);
 char	*ft_strchr(const char *s, int c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strjoin_f1(char const *s1, char const *s2);
 char	*ft_strdup(const char *s1);
 
 #endif
